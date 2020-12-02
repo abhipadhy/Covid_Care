@@ -14,11 +14,12 @@ var nodemailer = require('nodemailer');
 const { compile } = require('ejs');
 // A unique identifier for the given session
 const sessionId = uuid.v4();
-require('dotenv').config;
+require('dotenv').config();
 var uri = process.env.MONGODBURI;
 var pass = process.env.NODEMAILER;
-mongoose.connect(uri,{ useNewUrlParser: true , useUnifiedTopology: true });
-
+mongoose.connect(uri, { useNewUrlParser: true , useUnifiedTopology: true })
+.then(() => 
+console.log("Database is connected!"))
 
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -166,10 +167,9 @@ app.post("/signup",function(req,res){
 		if(err)
 		console.log(err);
 		else{
-			
-			res.render("dash.ejs",{currentUser:req.user,hospital:hospital});
-		}
-	
+				res.render("dash.ejs",{currentUser:req.user,hospital:hospital});
+			};
+		
 		});
 	
 	});
